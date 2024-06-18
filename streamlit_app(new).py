@@ -10,13 +10,18 @@ import numpy as np
 # Load model from a zip file
 filename = 'prediksi_harga_rumah_smg.zip'
 with zipfile.ZipFile(filename, 'r') as zip_ref:
+    # List all the contents of the zip file
     file_list = zip_ref.namelist()
+        
     with tempfile.TemporaryDirectory() as temp_dir:
+        # Extract all files to the temporary directory
         zip_ref.extractall(temp_dir)
+            
+        # Load pickle files from the extracted contents
         for file_name in file_list:
             file_path = os.path.join(temp_dir, file_name)
             with open(file_path, 'rb') as f:
-                model_RF = pickle.load(f)
+                model = pickle.load(f)
 
 # Membuat sidebar
 test = st.sidebar.radio("Menu", ["Beranda", "Data", "Labelling", "Prediksi", "Kontak"])
